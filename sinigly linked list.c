@@ -49,7 +49,7 @@ void beginning_insert()
     if(head==NULL)
     {
         new->next=NULL;
-        head=NULL;
+        head=new;
     }
     else
     {
@@ -81,6 +81,7 @@ void middle_insert()
             if(temp->next==NULL)
             {
                 printf("Reached the end of the list");
+                break;
             }
             temp=temp->next;
         }
@@ -124,7 +125,7 @@ void traversal()
     else
     {
         temp=head;
-        while(temp->next!=NULL)
+        while(temp!=NULL)
         {
             printf("%d\t",temp->data);
             temp=temp->next;
