@@ -5,18 +5,21 @@ struct node
 {
     int data;
     struct node *next;
-}*head=NULL,*new,*temp;
+}*head=NULL,*new,*temp,*temp1;
 void beginning_insert();
 void middle_insert();
 void end_insert();
+void beginning_delete();
+void middle_delete();
+void end_delete(); 
 void traversal();
 void main()
 {
     int c=0;
     
-    while(c!=5)
+    while(c!=8)
     {
-        printf("\nEnter \n1:Inserion at the beginning\n2:Insertion at the middle\n3:Insertion at end\n4:Displaying the list\n5:Exit");
+        printf("\nEnter \n1:Inserion at the beginning\n2:Insertion at the middle\n3:Insertion at end\n4:Deletion in the beginning\n5:Deletion in the middle\n6:Deletion in the end\n7:Displaying the list\n8:Exit");
         scanf("%d",&c);
         switch (c)
         {
@@ -30,9 +33,18 @@ void main()
                 end_insert();
                 break;
             case 4:
-                traversal();
+                beginning_delete();
                 break;
             case 5:
+                middle_delete();
+                break;
+            case 6:
+                end_delete();
+                break;
+            case 7:
+                traversal();
+                break;
+            case 8:
                 exit;
                 break;
         }
@@ -41,7 +53,6 @@ void main()
 void beginning_insert()
 {
     int val;
-    // struct node *new;
     new=(struct node *)malloc(sizeof(struct node));
     printf("Enter the data to be inserted");
     scanf("%d",&val);
@@ -61,7 +72,6 @@ void beginning_insert()
 void middle_insert()
 {
     int val,loc;
-    // struct node *new,*temp;
     new=(struct node *)malloc(sizeof(struct node));
     printf("Enter the data to be inserted");
     scanf("%d",&val);
@@ -76,7 +86,7 @@ void middle_insert()
     else
     {
         temp=head;
-        for(int i=1;i<loc;i++)
+        for(int i=2;i<loc;i++)
         {
             if(temp->next==NULL)
             {
@@ -93,7 +103,6 @@ void middle_insert()
 void end_insert()
 {
     int val;
-    // struct node *new,*temp;
     new=(struct node *)malloc(sizeof(struct node));
     printf("Enter the data to be inserted");
     scanf("%d",&val);
@@ -115,9 +124,67 @@ void end_insert()
     }
     printf("\nNode inserted");
 }
+void beginning_delete()
+{
+    if(head==NULL)
+    {
+        printf("List is empty");
+    }
+    else
+    {
+        temp=head;
+        printf("The deleted data = %d",temp->data);
+        head=head->next;
+        free(temp);
+    }
+}
+void middle_delete()
+{
+    int loc,i;
+    printf("Enter the location to delete");
+    scanf("%d",&loc);
+    if(head==NULL)
+    {
+        printf("List is empty");
+    }
+    else
+    {
+        temp=head;
+        for(i=1;i<loc;i++)
+        {
+            if(temp->next==NULL)
+            {
+                printf("Reached the end of the list");
+            }
+            temp1=temp;
+            temp=temp->next;
+        }
+        printf("The deleted data = %d",temp->data);
+        temp1->next=temp->next;
+        free(temp);
+    }
+}
+void end_delete()
+{
+    if(head==NULL)
+    {
+        printf("List is empty");
+    }
+    else
+    {
+        temp=head;
+        while(temp->next!=NULL)
+        {
+            temp1=temp;
+            temp=temp->next;
+        }
+        printf("The deleted data = %d",temp->data);
+        temp1->next=NULL;
+        free(temp);
+    }
+}
 void traversal()
 {
-    struct node *temp;
     if(head==NULL)
     {
         printf("List is empty");
