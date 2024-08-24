@@ -10,9 +10,9 @@ struct node
 void beginning_insert();
 void middle_insert();
 void end_insert();
-// void beginning_delete();
-// void middle_delete();
-// void end_delete(); 
+void beginning_delete();
+void middle_delete();
+void end_delete(); 
 void traversal();
 void main()
 {
@@ -33,15 +33,15 @@ void main()
             case 3:
                 end_insert();
                 break;
-            // case 4:
-            //     beginning_delete();
-            //     break;
-            // case 5:
-            //     middle_delete();
-            //     break;
-            // case 6:
-            //     end_delete();
-            //     break;
+            case 4:
+                beginning_delete();
+                break;
+            case 5:
+                middle_delete();
+                break;
+            case 6:
+                end_delete();
+                break;
             case 7:
                 traversal();
                 break;
@@ -50,6 +50,9 @@ void main()
                 break;
         }
     }
+    free(new);
+    free(head);
+    free(temp);
 }
 void beginning_insert()
 {
@@ -98,7 +101,8 @@ void middle_insert()
             temp=temp->next;
         }
         new->next=temp->next;
-        temp->next->prev=new;
+        if(temp->next!=NULL)
+            temp->next->prev=new;
         temp->next=new;
         new->prev=temp;
     }
@@ -120,12 +124,73 @@ void end_insert()
         temp=head;
         while(temp->next!=NULL)
         {
+            if(temp->next==NULL)
+            {
+                printf("Reached the end of the list");
+                break;
+            }
+            temp1=temp;
             temp=temp->next;
         }
         new->prev=temp;
         temp->next=new;
+        new->next=NULL;
     }
     printf("\nNode Inserted");
+}
+void beginning_delete()
+{
+    if(head==NULL)
+    printf("List is Empty");
+    else
+    {
+        temp=head;
+        printf("The deleted data = %d",temp->data);
+        head=head->next;
+        head->prev=NULL;
+        free(temp);
+    }
+}
+void middle_delete()
+{
+    int n;
+    if(head==NULL)
+    printf("List is Empty");
+    else
+    {
+        printf("Enter the location to be deleted");
+        scanf("%d",&n);
+        temp=head;
+        for(int i=1;i<n;i++)
+        {
+            temp=temp->next;
+        }
+        if(temp->next==NULL)
+        {
+            printf("Reached the end of the list");
+            return;
+        }
+        printf("The deleted data = %d\n", temp->data);
+        temp->prev->next=temp->next;
+        temp->next->prev=temp->prev;
+        free(temp);
+    }
+}
+void end_delete()
+{
+    if(head==NULL)
+    printf("List is Empty");
+    else
+    {
+        temp=head;
+        while(temp!=NULL)
+        {
+            temp=temp->next;
+        }
+        temp->prev->next=NULL;
+        printf("The deleted data = %d\n", temp->data);
+        free(temp);
+    }
 }
 void traversal()
 {
