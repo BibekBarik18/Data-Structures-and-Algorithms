@@ -129,7 +129,6 @@ void end_insert()
                 printf("Reached the end of the list");
                 break;
             }
-            temp1=temp;
             temp=temp->next;
         }
         new->prev=temp;
